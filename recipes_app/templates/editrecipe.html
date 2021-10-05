@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Recipe</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="bg-warning mx-auto bg-gradient align-items-center px-5 py-3 d-flex flex-row justify-content-between" style="--bs-bg-opacity: .65;">
+        <h1 class="display-6 text-dark text-center">Edit recipe</h1>
+        <div class="">
+            <a class="px-1" href="/dashboard">Dashboard</a>
+            <a class="px-1" href="/logout">Logout</a>
+        </div>
+    </div>
+    {% with messages = get_flashed_messages() %}     
+    {% if messages %}
+    <div style="--bs-bg-opacity: .5;" class="bg-danger text-white rounded p-2 mb-3">
+        <ul>                           
+        {% for message in messages %}            
+            <li>{{message}}</li>                   
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+{% endwith %}
+    <form class="d-flex flex-row justify-content-between w-75 mx-auto p-3 mt-3 bg-secondary rounded" style="--bs-bg-opacity: .10;" action="/recipes/update/{{recipe.id}}" method="POST">
+        <span class="d-flex flex-column col-6">
+            <input type="hidden" name="id" value="{{recipe.id}}">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" class="my-2 rounded" value="{{recipe.name}}">
+
+            <label for="description">Description:</label>
+            <textarea  name="description" id="description" class="my-2 rounded">{{recipe.description}}</textarea>
+
+            <label for="instructions">Instructions:</label>
+            <textarea name="instructions" id="instructions" class="my-2 rounded">{{recipe.instructions}}</textarea>
+
+            <button type="submit" class="btn-warning my-2 rounded">Update</button>
+        </span>
+        <span class="d-flex flex-column col-4">
+            <label for="date">Date Made On:</label>
+            <span><input type="date" id="date" name="date" class="my-2 rounded" value="{{recipe.date.strftime("%Y-%m-%d")}}"> <label for="date"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar4-week" viewBox="0 0 16 16">
+                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1H2zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5z"/>
+                <path d="M11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-2 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
+            </svg></label></span>
+
+            <table class="mb-3">
+                <tr><label for="name">Under 30 Minutes?:</label></tr>
+                <tr>
+                    <td>
+                        <input type="radio" id="yes" name="lessthan30" value="Yes" {% if recipe.lessthan30 == 'Yes': %}checked{% endif %}>
+                            <label for="lessthan30">Yes</label>
+                    </td>
+                    <td>
+                        <input type="radio" id="lessthan30" name="lessthan30" value="No" {% if recipe.lessthan30 == 'No': %}checked{% endif %}>
+                            <label for="lessthan30">No</label>
+                    </td>
+
+                    </td>
+                </tr>
+            </table>
+        </span>
+    </form>
+</body>
+</html>

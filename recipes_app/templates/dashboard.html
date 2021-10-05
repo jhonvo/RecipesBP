@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{user.first_name}} - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="bg-warning mx-auto bg-gradient align-items-center px-5 py-3 d-flex flex-row justify-content-between" style="--bs-bg-opacity: .65;">
+        <h1 class="display-6 text-dark text-center">Hello {{user.first_name}}</h1>
+        <div class="">
+            <a class="px-1" href="/recipes/new">Create</a>
+            <a class="px-1" href="/logout">Logout</a>
+        </div>
+    </div>
+    <p class="mx-5 pt-3">These are the recipies:</p>
+    <table class="mx-auto w-75 table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Under 30 Minutes?
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for recipe in recipes:%}
+            <tr>
+                <td>
+                    {{recipe.name}}
+                </td>
+                <td>
+                    {{recipe.lessthan30}}
+                </td>
+                <td>
+                    <a href="recipes/{{recipe.id}}">View Instructions</a> 
+                    {% if recipe.user_id == user.id %}
+                    | <a href="recipes/edit/{{recipe.id}}">Edit</a> | <a href="recipes/remove/{{recipe.id}}">Delete</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>
